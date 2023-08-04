@@ -1,9 +1,11 @@
 #![allow(unused)]
 
+use convert_case::{Case, Casing};
 use futures::StreamExt;
 use gloo_net::{eventsource::futures::EventSource, http::Request};
 use leptos::{create_rw_signal, spawn_local, RwSignal, SignalUpdate};
-use serde::de::DeserializeOwned;
+use serde::{de::DeserializeOwned, Serialize};
+use serde_type_name::type_name;
 use std::{rc::Rc, sync::RwLock};
 
 pub const DEFAULT_SSE_URL: &str = "/sse/v2";
@@ -31,20 +33,24 @@ impl Default for Sse {
 }
 
 impl Sse {
-    pub fn subscribe<T>(&self, channel: &'static str) -> RwSignal<T>
+    pub fn subscribe<T>(&self) -> RwSignal<T>
     where
-        T: Default + DeserializeOwned,
+        T: Default + DeserializeOwned + Serialize,
     {
         if let Some(signal) = self.signals.read().unwrap().get::<RwSignal<T>>() {
             return *signal;
         }
 
+        let channel = type_name(&T::default()).unwrap().to_case(Case::Snake);
+
         let signal = create_rw_signal(T::default());
         self.signals.write().unwrap().insert(signal);
 
+        let c = channel.clone();
+
         #[cfg(feature = "hydrate")]
         spawn_local(async move {
-            let response = Request::get(&format!("/api/v2/sse/{channel}")).send().await.unwrap();
+            let response = Request::get(&format!("/api/v2/sse/{}", c)).send().await.unwrap();
             let data: T = response.json().await.unwrap();
             signal.update(|s| *s = data);
         });

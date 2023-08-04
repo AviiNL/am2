@@ -6,7 +6,7 @@ use crate::sse::Sse;
 #[component]
 pub fn PlayerList() -> impl IntoView {
     let sse = use_context::<Sse>().expect("there to be a sse");
-    let status = sse.subscribe::<ArmaStatus>("arma_status");
+    let status = sse.subscribe::<ArmaStatus>();
 
     view! {
         <table class="table w-full shadow bg-base-100">

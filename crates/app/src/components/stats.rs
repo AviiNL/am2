@@ -7,7 +7,7 @@ use crate::sse::Sse;
 pub fn Stats() -> impl IntoView {
     let sse = use_context::<Sse>().expect("there to be a sse");
 
-    let arma_status = sse.subscribe::<ArmaStatus>("arma_status");
+    let arma_status = sse.subscribe::<ArmaStatus>();
 
     let server_name = Signal::derive(move || {
         let status = arma_status.get();
