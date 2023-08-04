@@ -8,24 +8,20 @@ use serde::{de::DeserializeOwned, Serialize};
 use serde_type_name::type_name;
 use std::{rc::Rc, sync::RwLock};
 
-pub const DEFAULT_SSE_URL: &str = "/sse/v2";
-
 #[allow(unused)]
 #[derive(Clone)]
 pub struct Sse {
     #[cfg(feature = "hydrate")]
     event_source: Rc<RwLock<EventSource>>,
-    signals: Rc<RwLock<anymap::AnyMap>>, // _ should be "any" type or whatever implements DeserializeOwned, but not bound to the struct.
+    signals: Rc<RwLock<anymap::AnyMap>>,
 }
 
 impl Default for Sse {
     fn default() -> Self {
-        let url = format!("{}/subscribe", DEFAULT_SSE_URL);
-
         Self {
             #[cfg(feature = "hydrate")]
             event_source: Rc::new(RwLock::new(
-                EventSource::new(&url).expect("to be able to create event source"),
+                EventSource::new("/sse/v2/subscribe").expect("to be able to create event source"),
             )),
             signals: Rc::new(RwLock::new(anymap::AnyMap::new())),
         }
@@ -41,12 +37,13 @@ impl Sse {
             return *signal;
         }
 
-        let channel = type_name(&T::default()).unwrap().to_case(Case::Snake);
+        let default = T::default();
 
-        let signal = create_rw_signal(T::default());
-        self.signals.write().unwrap().insert(signal);
-
+        let channel = type_name(&default).unwrap().to_case(Case::Snake);
         let c = channel.clone();
+
+        let signal = create_rw_signal(default);
+        self.signals.write().unwrap().insert(signal);
 
         #[cfg(feature = "hydrate")]
         spawn_local(async move {

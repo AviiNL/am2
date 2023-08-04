@@ -22,8 +22,3 @@ pub enum ArmaStatus {
     #[default]
     Offline,
 }
-
-#[derive(Default, Clone, Serialize, Deserialize)]
-pub struct Test {
-    pub number: usize,
-}
