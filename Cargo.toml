@@ -1,0 +1,75 @@
+[package]
+name = "arma-manager-2"
+version.workspace = true
+edition.workspace = true
+
+[workspace]
+members = ["crates/*"]
+exclude = ["vendor/*"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[workspace.dependencies]
+app = { path = "crates/app" }
+arma = { path = "crates/arma" }
+config = { path = "crates/config" }
+data = { path = "crates/data" }
+error = { path = "crates/error" }
+frontend = { path = "crates/frontend" }
+web = { path = "crates/web" }
+
+axum = { version = "0.6", features = ["macros"] }
+
+convert_case = "0.6.0"
+
+leptos = { version = "0.5.0-alpha2" }
+leptos_axum = { version = "0.5.0-alpha2" }
+leptos_meta = { version = "0.5.0-alpha2" }
+leptos_router = { version = "0.5.0-alpha2" }
+leptos-use = { version = "0.6.0" }
+
+reqwest = { version = "0.11", features = ["rustls-tls", "json", "blocking"] }
+
+tracing = { version = "0.1.37" }
+tracing-subscriber = { version = "0.3.17", features = ["env-filter"] }
+
+tokio = { version = "1.29", features = ["full"] }
+tokio-stream = { version = "0.1.14", features = ["sync"] }
+
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_type_name = "0.2.0"
+
+tower = { version = "0.4", features = ["full"] }
+tower-http = { version = "0.4", features = ["full"] }
+
+[dependencies]
+arma.workspace = true
+config.workspace = true
+error.workspace = true
+tokio.workspace = true
+web.workspace = true
+
+[[workspace.metadata.leptos]]
+name = "app"
+site-root = "target/site"
+site-pkg-dir = "pkg"
+style-file = "crates/app/style/output.scss"
+assets-dir = "crates/app/public"
+site-addr = "127.0.0.1:3000"
+reload-port = 3001
+browserquery = "defaults"
+watch = false
+env = "DEV"
+
+bin-package = "arma-manager-2"
+bin-default-features = false
+bin-features = []
+
+lib-package = "frontend"
+lib-default-features = false
+lib-features = []

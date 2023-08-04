@@ -1,0 +1,27 @@
+[package]
+name = "web"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+app.workspace = true
+data.workspace = true
+error.workspace = true
+
+axum.workspace = true
+convert_case.workspace = true
+
+tokio.workspace = true
+tokio-stream.workspace = true
+
+serde.workspace = true
+serde_json.workspace = true
+serde_type_name.workspace = true
+
+leptos.workspace = true
+leptos_axum.workspace = true
+
+tower.workspace = true
+tower-http.workspace = true
