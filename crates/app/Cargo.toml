@@ -8,6 +8,7 @@ edition.workspace = true
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
+anymap = "1.0.0-beta.2"
 axum = { workspace = true, optional = true }
 
 cfg-if = "1"

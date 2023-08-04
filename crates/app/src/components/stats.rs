@@ -1,46 +1,44 @@
 use data::ArmaStatus;
 use leptos::*;
 
-use crate::app_state::AppState;
+use crate::sse::Sse;
 
 #[component]
 pub fn Stats() -> impl IntoView {
-    let state = use_context::<AppState>().expect("there to be a state");
+    let sse = use_context::<Sse>().expect("there to be a sse");
+
+    let arma_status = sse.subscribe::<ArmaStatus>("arma_status");
 
     let server_name = Signal::derive(move || {
-        // let status = state.arma_status.get();
-        // match status {
-        //     ArmaStatus::Online(info) => info.name,
-        //     ArmaStatus::Offline => String::from("Offline"),
-        // }
-        String::from("Offline")
+        let status = arma_status.get();
+        match status {
+            ArmaStatus::Online(info) => info.name,
+            ArmaStatus::Offline => String::from("Offline"),
+        }
     });
 
     let map = Signal::derive(move || {
-        // let status = state.arma_status.get();
-        // match status {
-        //     ArmaStatus::Online(info) => info.map,
-        //     ArmaStatus::Offline => String::from("Offline"),
-        // }
-        String::from("Offline")
+        let status = arma_status.get();
+        match status {
+            ArmaStatus::Online(info) => info.map,
+            ArmaStatus::Offline => String::from("Offline"),
+        }
     });
 
     let mission = Signal::derive(move || {
-        // let status = state.arma_status.get();
-        // match status {
-        //     ArmaStatus::Online(info) => info.mission,
-        //     ArmaStatus::Offline => String::from("Offline"),
-        // }
-        String::from("Offline")
+        let status = arma_status.get();
+        match status {
+            ArmaStatus::Online(info) => info.mission,
+            ArmaStatus::Offline => String::from("Offline"),
+        }
     });
 
     let players = Signal::derive(move || {
-        // let status = state.arma_status.get();
-        // match status {
-        //     ArmaStatus::Online(info) => format!("{}/{}", info.players.len(), info.max_players),
-        //     ArmaStatus::Offline => String::from("Offline"),
-        // }
-        String::from("Offline")
+        let status = arma_status.get();
+        match status {
+            ArmaStatus::Online(info) => format!("{}/{}", info.players.len(), info.max_players),
+            ArmaStatus::Offline => String::from("Offline"),
+        }
     });
 
     view! {

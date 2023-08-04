@@ -50,6 +50,7 @@ tower-http = { version = "0.4", features = ["full"] }
 [dependencies]
 arma.workspace = true
 config.workspace = true
+data.workspace = true
 error.workspace = true
 tokio.workspace = true
 web.workspace = true

@@ -1,7 +1,14 @@
+use data::Test;
 use leptos::*;
+
+use crate::sse::Sse;
 
 #[component]
 pub fn PlayerList() -> impl IntoView {
+    let sse = use_context::<Sse>().expect("there to be a sse");
+
+    let test = sse.subscribe::<Test>("test");
+
     view! {
         <table class="table w-full shadow bg-base-100">
             <thead>
@@ -14,7 +21,7 @@ pub fn PlayerList() -> impl IntoView {
             <tbody>
                 <tr>
                     <td>"Player 1"</td>
-                    <td>"100"</td>
+                    <td>{ move || test.get().number }</td>
                     <td>"1:00:00"</td>
                 </tr>
                 <tr>

@@ -1,13 +1,13 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Default, Clone, Serialize, Deserialize)]
 pub struct Player {
     pub name: String,
     pub score: i32,
     pub duration: u64,
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Default, Clone, Serialize, Deserialize)]
 pub struct Info {
     pub name: String,
     pub map: String,
@@ -16,8 +16,14 @@ pub struct Info {
     pub players: Vec<Player>,
 }
 
-#[derive(Clone, Serialize, Deserialize)]
+#[derive(Default, Clone, Serialize, Deserialize)]
 pub enum ArmaStatus {
     Online(Info),
+    #[default]
     Offline,
+}
+
+#[derive(Default, Clone, Serialize, Deserialize)]
+pub struct Test {
+    pub number: usize,
 }
