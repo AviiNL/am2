@@ -35,7 +35,6 @@ impl Sse {
     where
         T: Default + DeserializeOwned,
     {
-        // // if a signal already exists for this channel, return it
         if let Some(signal) = self.signals.read().unwrap().get::<RwSignal<T>>() {
             return *signal;
         }
@@ -45,7 +44,6 @@ impl Sse {
 
         #[cfg(feature = "hydrate")]
         spawn_local(async move {
-            // make an api call to /api/v2/sse/{channel} to get the initial data to construct the RwSignal
             let response = Request::get(&format!("/api/v2/sse/{channel}")).send().await.unwrap();
             let data: T = response.json().await.unwrap();
             signal.update(|s| *s = data);
@@ -56,7 +54,6 @@ impl Sse {
 
         #[cfg(feature = "hydrate")]
         spawn_local(async move {
-            // as the subscription is moved in here, the borrow_mut never ends?, and thus we can't re-borrow it for another subscription.
             while let Some(Ok((_, msg))) = subscription.next().await {
                 let data = msg.data().as_string().unwrap();
                 let t: T = serde_json::from_str::<T>(&data).unwrap();

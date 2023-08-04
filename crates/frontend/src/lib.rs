@@ -31,8 +31,6 @@ pub fn hydrate() {
     )
     .expect("Unable to set global tracing subscriber");
 
-    tracing::info!("Hello World!");
-
     console_error_panic_hook::set_once();
 
     mount_to_body(move || {
