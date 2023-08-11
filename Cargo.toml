@@ -26,10 +26,10 @@ axum = { version = "0.6", features = ["macros"] }
 
 convert_case = "0.6.0"
 
-leptos = { version = "0.5.0-alpha2" }
-leptos_axum = { version = "0.5.0-alpha2" }
-leptos_meta = { version = "0.5.0-alpha2" }
-leptos_router = { version = "0.5.0-alpha2" }
+leptos = { version = "0.5.0-beta" }
+leptos_axum = { version = "0.5.0-beta" }
+leptos_meta = { version = "0.5.0-beta" }
+leptos_router = { version = "0.5.0-beta" }
 leptos-use = { version = "0.6.0" }
 
 reqwest = { version = "0.11", features = ["rustls-tls", "json", "blocking"] }
@@ -46,6 +46,8 @@ serde_type_name = "0.2.0"
 
 tower = { version = "0.4", features = ["full"] }
 tower-http = { version = "0.4", features = ["full"] }
+
+uuid = { version = "1.4", features = ["serde", "v4"] }
 
 [dependencies]
 arma.workspace = true

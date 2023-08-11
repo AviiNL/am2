@@ -33,5 +33,6 @@ fn theme_signal() -> RwSignal<Theme> {
 }
 
 fn user_signal() -> RwSignal<Option<String>> {
-    create_rw_signal(Some(String::from("Avii")))
+    // create_rw_signal(Some(String::from("Avii")))
+    create_rw_signal(None)
 }
