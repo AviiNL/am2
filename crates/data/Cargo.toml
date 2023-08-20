@@ -6,4 +6,16 @@ edition.workspace = true
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+
+argon2 = { version = "0.5.1", optional = true }
+
 serde.workspace = true
+uuid.workspace = true
+
+rand_core = { version = "0.6.4", optional = true }
+sqlx = { workspace = true, optional = true }
+
+[features]
+default = []
+ssr = ["dep:sqlx", "dep:argon2", "dep:rand_core"]
+hydrate = []

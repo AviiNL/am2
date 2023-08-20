@@ -26,7 +26,7 @@ pub fn Login() -> impl IntoView {
                             <div class="flex items-center justify-between">
                                 <div class="flex items-start">
                                     <div class="flex items-center h-5">
-                                        <input id="remember" aria-describedby="remember" type="checkbox" class="checkbox" required=""/>
+                                        <input id="remember" aria-describedby="remember" type="checkbox" class="checkbox" />
                                     </div>
                                     <div class="ml-3 text-sm">
                                         <label for="remember" class="block mb-2 text-sm font-medium">"Remember me"</label>

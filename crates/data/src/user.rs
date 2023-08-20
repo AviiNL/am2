@@ -1,11 +1,13 @@
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
+use uuid::Uuid;
 
 #[derive(Default, Clone, Serialize, Deserialize)]
 pub struct User {
-    pub id: String,
+    pub id: Uuid,
     pub name: String,
     pub email: String,
+    pub password: String,
     pub roles: HashSet<String>,
     pub verified: bool,
     pub tokens: Vec<UserToken>,
